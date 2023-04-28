@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+        - auth-network
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+        - auth-network
+networks:
+  auth-network:
+  
+
+
